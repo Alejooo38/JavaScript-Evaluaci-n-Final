@@ -77,11 +77,12 @@ var events = {
 
   function writeDisplay(value){
     if (value.length > maxLen) value = "ERROR";
-    document.getElementsByClassName("display").innerHTML = value;
+    document.getElementById("display").innerHTML = value;
   }
 
    function solveOp(){
-    if (screenVal.endsWith(".")) screenVal = screenVal.substr(0);
+    if (screenVal.endsWith(".")) screenVal = screenVal.substr(0,screenVal.length-1);
+    if (screenVal.length > maxLen) return;
     if (idBOp == ""){
       return;
     } else {
@@ -92,8 +93,14 @@ var events = {
           break;
         case btnsId.btn_menos:
           result = substract(nOp1, nOp2);
-          break;        
-          default:
+          break;
+        case btnsId.btn_por:
+          result = multiply(nOp1, nOp2);
+          break;
+        case btnsId.btn_div:
+          result = divide(nOp1, nOp2);
+          break;
+        default:
           alert(error_op);
           return;
       }
