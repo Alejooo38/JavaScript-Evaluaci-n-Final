@@ -62,9 +62,47 @@ var events = {
           break;
         case btnsId.btn_igual:
           solveOp();
-          break;      
+          break;
+        case btnsId.btn_mas  :
+        case btnsId.btn_menos:
+        case btnsId.btn_por  :
+        case btnsId.btn_div  :
+          addBasicOps(this.id);
+          break;
         default:
           addNumber(this.id);
       }
     }
+  }
+
+  function writeDisplay(value){
+    if (value.length > maxLen) value = "ERROR";
+    document.getElementsByClassName("display").innerHTML = value;
+  }
+
+   function solveOp(){
+    if (screenVal.endsWith(".")) screenVal = screenVal.substr(0);
+    if (idBOp == ""){
+      return;
+    } else {
+      nOp2 = Number(screenVal);
+      switch (idBOp) {
+        case btnsId.btn_mas:
+          result = add(nOp1, nOp2);
+          break;
+        case btnsId.btn_menos:
+          result = substract(nOp1, nOp2);
+          break;        
+          default:
+          alert(error_op);
+          return;
+      }
+      nOp2 = 0;
+      screenVal = String(result);
+      nOp1 = result;
+    }
+    if (screenVal.search(".") == - 1) maxLen = 9;
+    else maxLen = 10;
+    newVal = true;    
+    maxLen = 9;
   }
