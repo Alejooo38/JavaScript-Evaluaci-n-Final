@@ -116,25 +116,26 @@ var events = {
     idBOp = "";
     maxLen = 9;
   }
-
+ 
   function setSign(){
     result = Number(screenVal);
     result = -1 * result;
     screenVal = String(result);
   }
 
- function addPoint(){
+  function addPoint(){
     if (hasPoint == true) return;
-    if (screenVal.length > maxLen) return;   
+    if (screenVal.length > maxLen) return;
+    if (newVal == false && screenVal.length == maxLen) return;
     if (newVal == true || screenVal == "0") screenVal = "0";
     screenVal = screenVal + ".";
     writeDisplay(screenVal);
-    
+    maxLen = 10;
     hasPoint = true;
     newVal = false;
   }
 
-   function addNumber(id){
+  function addNumber(id){
     if (screenVal.length > maxLen) return;
     if (newVal == false && screenVal.length == maxLen) return;
     if (newVal == true || screenVal == "0") screenVal = "";
@@ -142,3 +143,75 @@ var events = {
     writeDisplay(screenVal);
     newVal = false;
   }
+
+   function addBasicOps(id){
+    if (screenVal.endsWith(".")) screenVal = screenVal.substr(0,screenVal.length-1);
+    if (screenVal.length > maxLen) return;
+    if (idBOp == ""){
+      nOp1 = Number(screenVal);
+    } else {
+      nOp2 = Number(screenVal);
+      switch (idBOp) {
+        case btnsId.btn_mas:
+          result = add(nOp1, nOp2);
+          break;
+        case btnsId.btn_menos:
+          result = substract(nOp1, nOp2);
+          break;
+        case btnsId.btn_por:
+          result = multiply(nOp1, nOp2);
+          break;
+        case btnsId.btn_div:
+          result = divide(nOp1, nOp2);
+          break;
+        default:
+          alert(error_op);
+          return;
+      }
+      if (id != idBOp) {
+            idBOp = id;
+      }
+      nOp2 = 0;
+      screenVal = String(result);
+      nOp1 = result;
+    }
+    if (screenVal.search(".") == - 1) maxLen = 9;
+    else maxLen = 10;
+    newVal = true;
+    writeDisplay(screenVal);
+    hasPoint = false;
+    idBOp = id;
+  }
+
+  //***  Inicio - Operaciones Suma, Resta, Multiplicación, División y Raiz Cuadrada
+  function add (v1, v2){
+    return v1 + v2;
+  }
+
+  function substract (v1, v2){
+    return v1 - v2;
+  }
+
+  function multiply (v1, v2){
+    return v1 * v2;
+  }
+
+  function divide (v1, v2){
+    return v1 / v2;
+  }
+
+//***  Fin - Operaciones Suma, Resta, Multiplicación, División y Raiz Cuadrada
+
+  var initialize = function(){
+    initVars()
+    getBtns();
+    subscribeEvents();
+  }
+
+  return{
+      init: initialize
+  }
+
+})(document);
+
+Calculadora.init();
