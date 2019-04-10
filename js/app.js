@@ -103,13 +103,22 @@ var events = {
         default:
           alert(error_op);
           return;
-      }
+       }
       nOp2 = 0;
       screenVal = String(result);
       nOp1 = result;
     }
     if (screenVal.search(".") == - 1) maxLen = 9;
     else maxLen = 10;
-    newVal = true;    
+    newVal = true;
+    writeDisplay(screenVal);
+    hasPoint = false;
+    idBOp = "";
     maxLen = 9;
+  }
+
+  function setSign(){
+    result = Number(screenVal);
+    result = -1 * result;
+    screenVal = String(result);
   }
