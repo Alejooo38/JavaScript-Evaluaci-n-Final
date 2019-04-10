@@ -122,3 +122,23 @@ var events = {
     result = -1 * result;
     screenVal = String(result);
   }
+
+ function addPoint(){
+    if (hasPoint == true) return;
+    if (screenVal.length > maxLen) return;   
+    if (newVal == true || screenVal == "0") screenVal = "0";
+    screenVal = screenVal + ".";
+    writeDisplay(screenVal);
+    
+    hasPoint = true;
+    newVal = false;
+  }
+
+   function addNumber(id){
+    if (screenVal.length > maxLen) return;
+    if (newVal == false && screenVal.length == maxLen) return;
+    if (newVal == true || screenVal == "0") screenVal = "";
+    screenVal = screenVal + id;
+    writeDisplay(screenVal);
+    newVal = false;
+  }
